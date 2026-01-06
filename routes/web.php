@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookApiController;
 
 Route::get('/', function () {
     return view('index');
@@ -20,3 +21,5 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::resource('book', BookController::class);
+
+Route::apiResource('api/book', BookApiController::class);

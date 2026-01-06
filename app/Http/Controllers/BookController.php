@@ -32,52 +32,35 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
+        // $imageName = $this->uploadCover($request);
 
-        // $data = $request->validated();
-        if($request->hasFile('cover') && $request->file('cover')->isValid()){
-            $image = $request->file('cover');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('covers'), $imageName);
-            // $data['cover'] = $imageName;
-        }
+        // Book::create([
+        //     'designation' => $request->designation,
+        //     'auteur' => $request->auteur,
+        //     'editeur' => $request->editeur,
+        //     'prix' => $request->prix,
+        //     'type' => $request->type,
+        //     'langue' => $request->langue,
+        //     'categorie' => $request->categorie,
+        //     'description' => $request->description,
+        //     'cover' => $imageName
+        // ]);
 
-        // Book::create($data);
-        Book::create([
-            'designation' => $request->designation,
-            'auteur' =>$request->auteur,
-            'editeur' =>$request->editeur,
-            'prix' => $request->prix,
-            'type' =>$request->type,
-            'description' => $request->description,
-            'cover' => $imageName
+        $data = $request->validated();
+
+        $data['cover'] = $this->uploadCover($request);
+
+        Book::create($data);
+
+        Log::info('Livre ajouté', [
+            'designation' => $request->designation
         ]);
 
-        Log::info('Livre ajouter', ['Designation de Livre' => $request->designation]);
-
-        return redirect()->route('book.index')->with('success', 'Livre ajoute avec succes.');
-
-
-        // $book = new Book();
-
-        // $book->designation = $request->input('designation');
-        // $book->auteur = $request->input('auteur');
-        // $book->prix = $request->input('prix');
-        // $book->type = $request->input('type');
-        // $book->description = $request->input('description');
-        // $book->editeur = $request->input('editeur');
-        // $book->annee = $request->input('annee');
-
-        // if($request->hasFile('cover') && $request->file('cover')->isValid()){
-        //     $image = $request->file('cover');
-        //     $imageName = time() . '_' . $image->getClientOriginalName();
-        //     $image->move(public_path('covers'), $imageName);
-        //     $book->cover = $imageName;
-        // }
-
-
-        // $book->save();
-
+        return redirect()
+            ->route('book.index')
+            ->with('success', 'Livre ajouté avec succès.');
     }
+
 
 
     /**
@@ -101,53 +84,61 @@ class BookController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
- 
         $data = $request->validated();
-        if($request->hasFile('cover') && $request->file('cover')->isValid()){
-            if($book->cover && file_exists(public_path('covers/'.$book->cover))){
-                unlink(public_path('covers/'. $book->cover));
-            }
-            $image = $request->file('cover');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('covers'), $imageName);
-            $data['cover'] = $imageName;
-        }
+
+        $data['cover'] = $this->uploadCover($request, $book->cover);
 
         $book->update($data);
 
-        Log::info('Livre modifier', ['Designation de Livre' => $request->designation]);
+        Log::info('Livre modifié', [
+            'id' => $book->id,
+            'designation' => $book->designation
+        ]);
 
-        return redirect()->route('book.index')->with('success', 'Livre modifier avec succes.');
-        
-
-        // if($request->hasFile('cover') && $request->file('cover')->isValid()){
-        //     $image = $request->file('cover');
-        //     $imageName = time() . '_' . $image->getClientOriginalName();
-        //     $image->move(public_path('covers'), $imageName);
-        //     $book->cover = $imageName;
-        // }
-
-
-        // $book->save();
+        return redirect()
+            ->route('book.index')
+            ->with('success', 'Livre modifié avec succès.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Book $book)
     {
-        if($book == null){
-            return redirect()->back()->with('error', 'le livre n\'existe pas.');
-        };
-        if($book->cover && $book->cover != 'no_cover.jpg'){
-            if(file_exists(public_path('covers/'.$book->cover)))
-                unlink(public_path('covers/'. $book->cover));
+        if ($book->cover && file_exists(public_path('covers/' . $book->cover))) {
+            unlink(public_path('covers/' . $book->cover));
         }
-        $designation = $book->designation;
+
+        Log::info('Livre supprimé', [
+            'id' => $book->id,
+            'designation' => $book->designation
+        ]);
+
         $book->delete();
 
-        Log::info('Livre supprime', ['Designation de Livre' => $designation]);
+        return redirect()
+            ->route('book.index')
+            ->with('success', 'Livre supprimé avec succès.');
+    }
 
-        return redirect()->route('book.index')->with('success','Livre supprime avec succes.');
+
+    private function uploadCover(Request $request, $oldCover = null)
+    {
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+
+
+            if ($oldCover && file_exists(public_path('covers/' . $oldCover))) {
+                unlink(public_path('covers/' . $oldCover));
+            }
+
+            $image = $request->file('cover');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('covers'), $imageName);
+
+            return $imageName;
+        }
+
+        return $oldCover;
     }
 }
