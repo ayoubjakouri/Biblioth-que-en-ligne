@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 @empty
-                    <h3 class=" text-center mt-2 text-3xl font-bold text-gray-900 sm:text-4xl">Zero livres</h3>
+                    <h3 class=" text-center mt-2 text-3xl font-bold text-gray-900 sm:text-4xl">Aucun Livers !</h3>
                 @endforelse
             </div>
         </div>
