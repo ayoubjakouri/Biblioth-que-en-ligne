@@ -16,6 +16,9 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
+
+        Log::info('Livres :');
+
         return view('book.index', compact('books'));
     }
 
@@ -132,12 +135,18 @@ class BookController extends Controller
                 unlink(public_path('covers/' . $oldCover));
             }
 
+
             $image = $request->file('cover');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('covers'), $imageName);
 
+            // dd($imageName);
+
             return $imageName;
         }
+
+        if(!$oldCover) return 'no_cover.jpg'; 
+       
 
         return $oldCover;
     }

@@ -67,7 +67,7 @@ class BookApiController extends Controller
         $book = Book::find($id);
 
         if (!$book) {
-            Log::error('Update failed - book not found', ['id' => $id]);
+            Log::error('book not found', ['id' => $id]);
 
             return response()->json(['message' => 'Book not found'], 404);
         }
