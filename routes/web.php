@@ -15,9 +15,7 @@ Route::middleware('auth')->group(function () {
         return view('about');
     })->name('about');
 
-    Route::get('/books', function () {
-        return view('books');
-    })->name('books');
+    Route::get('/books', [BookController::class, 'catalog'])->name('books');
 
     Route::get('/contact', function () {
         return view('contact');

@@ -26,11 +26,12 @@ class StoreBookRequest extends FormRequest
             'auteur'      => ['required', 'string', 'max:255'],
             'editeur'     => ['required', 'string', 'max:255'],
             'prix'        => ['required', 'numeric', 'min:0'],
-            'type'        => ['required','string',],
-            'langue'      => ['required','string',],
-            'categorie'   => ['required','string','max:255'],
+            'type_id'     => ['required', 'integer', 'exists:types,id'],
+            'langue'      => ['required', 'string'],
+            'category_id' => ['required', 'integer', 'exists:categories,id'],
             'description' => ['required', 'string', 'min:10'],
-            'cover'       => ['nullable','image','mimes:jpg,jpeg,png,webp','max:2048'],
+            'cover'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'tags'        => ['nullable', 'string'],
         ];
     }
 }
