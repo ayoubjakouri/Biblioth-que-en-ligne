@@ -17,9 +17,24 @@ class Book extends Model
         'prix', 
         'auteur', 
         'cover', 
-        'type',
+        'type_id',
         'langue', 
         'editeur', 
-        'categorie'
+        'category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function type() 
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    public function tags() 
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

@@ -29,13 +29,16 @@
                             <label for="designation" class="sr-only">Désignation</label>
                             <input type="text" name="designation" id="designation"
                                 class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                value="{{ old('designation', $book->designation) }}"\>
+                                value="{{ old('designation', $book->designation) }}">
                         </div>
                         <div>
-                            <label for="type" class="sr-only">Type</label>
-                            <input type="text" name="type" id="type"
-                                class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Type" value="{{ old('type', $book->type) }}">
+                            <select name="type_id"
+                                class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
+                                <option value="">Type</option>
+                                @foreach ($types as $type)
+                                    <option value="{{ $type->id }}" {{ old('type_id', $book->type_id) == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -43,27 +46,30 @@
                             <label for="langue" class="sr-only">Langue</label>
                             <input type="text" name="langue" id="langue"
                                 class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Langue" value="{{ old('Langue', $book->langue) }}">
+                                placeholder="Langue" value="{{ old('langue', $book->langue) }}">
                         </div>
                         <div>
                             <label for="editeur" class="sr-only">Editeur</label>
                             <input type="text" name="editeur" id="editeur"
                                 class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Editeur" value="{{ old('Editeur', $book->editeur) }}">
+                                placeholder="Editeur" value="{{ old('editeur', $book->editeur) }}">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
-                            <label for="categorie" class="sr-only">Catégorie</label>
-                            <input type="text" name="categorie" id="categorie"
-                                class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Catégorie" value="{{ old('Categorie', $book->categorie) }}">
+                            <select name="category_id"
+                                class="w-full bg-gray-50 border border-gray-300 rounded-md text-gray-800 focus:ring-blue-500 focus:border-blue-500 text-sm p-2.5">
+                                <option value="">Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $book->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div>
                             <label for="prix" class="sr-only">Prix</label>
                             <input type="text" name="prix" id="prix"
                                 class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Prix" value="{{ old('Prix', $book->prix) }}">
+                                placeholder="Prix" value="{{ old('prix', $book->prix) }}">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -74,19 +80,33 @@
                                 placeholder="Auteur" value="{{ old('Auteur', $book->auteur) }}">
                         </div>
                         <div>
+                            <div class="flex flex-wrap items-center border border-gray-300 rounded-md p-2 space-x-2">
+                                <div id="tags-container" class="flex flex-wrap items-center gap-2">
+                                    <!-- Tags will be dynamically added here -->
+                                </div>
+                                <input id="tag-input" type="text" placeholder="Add a tag..."
+                                    class="flex-1 border-none outline-none focus:ring-0" />
+                                <input id="hidden-input" type="hidden" name="tags" />
+                            </div>
+                            <p id="error-message" class="mt-2 text-sm text-red-500 hidden">You can only add up to 5 tags.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
                             <label for="cover" class="sr-only">Cover</label>
                             <input type="file" name="cover" id="cover"
                                 class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
-                    <div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <label for="description" class="sr-only">Description</label>
                         <textarea id="description" name="description" rows="8"
                             class="w-full px-4 py-3 rounded-md bg-gray-100 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Description ...">
-                                   {{ old('Description', $book->description) }}
+                                                       {{ old('Description', $book->description) }}
 
-                                </textarea>
+                                                    </textarea>
                     </div>
                     <div>
                         <button type="submit"
@@ -97,6 +117,64 @@
                 </form>
             </div>
         </div>
+
+
+        <script>
+            const input = document.getElementById('tag-input');
+            const tagsContainer = document.getElementById('tags-container');
+            const errorMessage = document.getElementById('error-message');
+            const hiddenInput = document.getElementById('hidden-input');
+            let tags = [];
+
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' && input.value.trim() !== '') {
+                    event.preventDefault();
+                    const newTag = input.value.trim();
+                    if (tags.length >= 5) {
+                        // Show error if the tag limit is exceeded
+                        errorMessage.classList.remove('hidden');
+                        return;
+                    } else {
+                        errorMessage.classList.add('hidden');
+                    }
+
+                    if (!tags.includes(newTag)) {
+                        tags.push(newTag);
+                        renderTags();
+                    }
+                    input.value = '';
+                }
+            });
+
+            const renderTags = () => {
+                tagsContainer.innerHTML = '';
+                tags.forEach((tag, index) => {
+                    const tagElement = document.createElement('div');
+                    tagElement.className = 'flex items-center bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm';
+                    tagElement.innerHTML = `
+                        <span>${tag}</span>
+                        <button
+                            type="button"
+                            class="ml-2 text-blue-500 hover:text-blue-700"
+                            onclick="removeTag(${index})"
+                        >
+                            &times;
+                        </button>
+                        `;
+                    tagsContainer.appendChild(tagElement);
+
+                });
+                hiddenInput.value = tags.join(',');
+
+            };
+
+            const removeTag = (index) => {
+                tags.splice(index, 1);
+                renderTags();
+                errorMessage.classList.add('hidden'); // Hide error message if a tag is removed
+            };
+
+        </script>
     </main>
 
 @endsection
