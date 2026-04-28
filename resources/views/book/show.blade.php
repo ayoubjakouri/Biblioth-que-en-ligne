@@ -39,7 +39,7 @@
                                     </div>
                                 @endif
                                 <div class="mt-6 border-t border-gray-200 pt-6">
-                                    <h4 class="text-xl font-semibold text-gray-800">Description</h4>
+                                    <h4 class="text-xl font-semibold text-gray-800">{{ __('messages.book_description') }}</h4>
                                     <p class="mt-4 text-gray-600 leading-relaxed">
 
                                         {{ old('description', $book->description) }}
@@ -55,22 +55,28 @@
                     <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-md">
                         <h4 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-4">Aperçu du livre</h4>
                         <ul class="mt-4 space-y-3 text-gray-600">
-                            <li class="flex justify-between"><span>Date de création:</span> <span
+                            <li class="flex justify-between"><span>{{ __('messages.date_of_creation') }}:</span> <span
                                     class="font-medium text-gray-900">{{ old('created_at', $book->created_at) }}</span></li>
-                            <li class="flex justify-between"><span>Auteur:</span> <span
+                            <li class="flex justify-between"><span>{{ __('messages.book_author') }}:</span> <span
                                     class="font-medium text-gray-900">{{ old('auteur', $book->auteur) }}</span></li>
-                            <li class="flex justify-between"><span>Editeur:</span> <span
+                            <li class="flex justify-between"><span>{{ __('messages.book_editor') }}:</span> <span
                                     class="font-medium text-gray-900">{{ old('editeur', $book->editeur) }}</span></li>
-                            <li class="flex justify-between"><span>Catégorie:</span> <span
+                            <li class="flex justify-between"><span>{{ __('messages.book_category') }}:</span> <span
                                     class="font-medium text-gray-900">{{ optional($book->category)->name ?? 'Not specified' }}</span>
                             </li>
-                            <li class="flex justify-between"><span>Prix:</span> <span
+                            <li class="flex justify-between"><span>{{ __('messages.book_price') }}:</span> <span
                                     class="font-medium text-gray-900">{{ old('prix', $book->prix) }}</span></li>
                         </ul>
                         <div class="mt-6">
                             <a href="#"
                                 class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                                Acheter
+                                {{ __('messages.buy') }}
+                            </a>
+                        </div>
+                         <div class="mt-6">
+                            <a href="#"
+                                class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-200">
+                                {{ __('messages.send') }}
                             </a>
                         </div>
                     </div>

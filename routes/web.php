@@ -4,10 +4,19 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookApiController;
+use Illuminate\Support\Facades\Session;
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [BookController::class, 'home'])->name('index');
+
+Route::get('lang/{locale}', function (string $locale) {
+    if (!in_array($locale, ['en', 'fr'])) {
+        abort(400);
+    }
+
+    Session::put('locale', $locale);
+
+    return redirect()->back();
+})->name('lang');
 
 Route::middleware('auth')->group(function () {
 

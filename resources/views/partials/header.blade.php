@@ -4,19 +4,10 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <div class="shrink-0 flex-1">
-                <a href="{{ route("index") }}" class="text-gray-800 font-bold text-xl hover:text-blue-600 transition">Bibliothèque</a>
+                <a href="{{ route("index") }}" class="text-gray-800 font-bold text-xl hover:text-blue-600 transition">{{ __('messages.library') }}</a>
             </div>
 
             <!-- Desktop Navigation Menu -->
-            <div class="hidden md:flex items-baseline space-x-1">
-                <a href="{{ route("index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition">Accueil</a>
-                <a href="{{ route("book.index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition">Livres</a>
-                <a href="{{ route("books") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition">Recherche</a>
-                <a href="{{ route("about") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition">A propos</a>
-                <a href="{{ route("contact") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition">Contact</a>
-            </div>
-
-            <!-- Desktop Auth Section -->
             <div class="hidden md:block ml-6">
                 @include('layouts.navigation')
             </div>
@@ -37,40 +28,46 @@
              x-transition
              @click.away="mobileOpen = false"
              class="md:hidden border-t border-gray-200">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route("index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">Accueil</a>
-                <a href="{{ route("book.index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">Livres</a>
-                <a href="{{ route("books") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">Recherche</a>
-                <a href="{{ route("about") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">A propos</a>
-                <a href="{{ route("contact") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">Contact</a>
-            </div>
-
+             
             <!-- Mobile Auth Section -->
             <div class="border-t border-gray-200 px-2 py-2">
                 @auth
-                    <div class="px-3 py-2 font-semibold text-gray-800">
-                        {{ Auth::user()->name }}
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a href="{{ route("index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.home') }}</a>
+                        <a href="{{ route("book.index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.books') }}</a>
+                        <a href="{{ route("books") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.search') }}</a>
+                        <a href="{{ route("about") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.about_us') }}</a>
+                        <a href="{{ route("contact") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.contact_us') }}</a>
+                        
+                        <div class="flex space-x-4 px-3 py-2">
+                            <a href="{{ route('lang', 'en') }}" class="text-sm font-medium {{ App::getLocale() == 'en' ? 'text-blue-600' : 'text-gray-600' }}">EN</a>
+                            <a href="{{ route('lang', 'fr') }}" class="text-sm font-medium {{ App::getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-600' }}">FR</a>
+                        </div>
+
+                        <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition mt-2" @click="mobileOpen = false">{{ __('messages.profile') }}</a>
+                        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+                            @csrf
+                            <button onclick="event.preventDefault(); this.closest('form').submit();" class="w-full text-left text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition">
+                                {{ __('messages.logout') }}
+                            </button>
+                        </form>
                     </div>
-                    <div class="px-3 py-1 text-sm text-gray-600">
-                        {{ Auth::user()->email }}
-                    </div>
-                    <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition mt-2" @click="mobileOpen = false">Profile</a>
-                    <form method="POST" action="{{ route('logout') }}" class="mt-2">
-                        @csrf
-                        <button onclick="event.preventDefault(); this.closest('form').submit();" class="w-full text-left text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition">
-                            Log Out
-                        </button>
-                    </form>
                 @endauth
 
                 @guest
-                    <div class="flex flex-col space-y-2">
-                        <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center transition" @click="mobileOpen = false">
-                            S'inscrire
-                        </a>
-                        <a href="{{ route('login') }}" class="bg-blue-600 text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium text-center transition" @click="mobileOpen = false">
-                            Se connecter
-                        </a>
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <div class="flex space-x-4 px-3 py-2 mb-2 border-b border-gray-100">
+                            <a href="{{ route('lang', 'en') }}" class="text-sm font-medium {{ App::getLocale() == 'en' ? 'text-blue-600' : 'text-gray-600' }}">EN</a>
+                            <a href="{{ route('lang', 'fr') }}" class="text-sm font-medium {{ App::getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-600' }}">FR</a>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center transition" @click="mobileOpen = false">
+                                {{ __('messages.register') }}
+                            </a>
+                            <a href="{{ route('login') }}" class="bg-blue-600 text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium text-center transition" @click="mobileOpen = false">
+                                {{ __('messages.login') }}
+                            </a>
+                        </div>
                     </div>
                 @endguest
             </div>

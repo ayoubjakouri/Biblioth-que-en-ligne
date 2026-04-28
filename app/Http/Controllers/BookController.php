@@ -20,7 +20,7 @@ class BookController extends Controller
     {
         $books = Book::all();
 
-        Log::info('Livres :');
+        Log::info("Livres : $books");
 
         return view('book.index', compact('books'));
     }
@@ -61,8 +61,6 @@ class BookController extends Controller
             ->with('success', 'Livre ajouté avec succès.');
     }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -91,7 +89,7 @@ class BookController extends Controller
         $data['cover'] = $this->uploadCover($request, $book->cover);
 
         $book->update($data);
-        
+
         $tagsId = $this->saveTags($request->input('tags', ''));
 
         $book->tags()->sync($tagsId);
@@ -135,9 +133,77 @@ class BookController extends Controller
         $types = Type::all();
         $tags = Tag::all();
 
+        $query = Book::query()->with('tags');
 
-        return view('books', compact('categories', 'types', 'tags'));
+         // Filter by category
+        if ($request->input('text')) {
+            $query->where('designation','like', "%{$request->input('text')}%");
+        }
+
+        // Filter by category
+        if ($request->input('type')) {
+            $query->where('type_id', $request->input('type'));
+        }
+
+        // Filter by category
+        if ($request->input('category')) {
+            $query->where('category_id', $request->input('category'));
+        }
+
+        // Filter by types
+        if ($request->has('types') && is_array($request->input('types'))) {
+            $query->whereIn('type_id', $request->input('types'));
+        }
+
+        // Filter by tags
+        if ($request->has('tags') && is_array($request->input('tags'))) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->whereIn('tag_id', $request->input('tags'));
+            });
+        }
+
+        // Sort
+        if ($request->input('sort')) {
+            switch ($request->input('sort')) {
+                case "designation":
+                    $query->orderBy('designation');
+                    break;
+                case "created_at":
+                    $query->orderBy('created_at');
+                    break;
+                case "prix":
+                    $query->orderBy('prix');
+                    break;
+            }
+        }
+
+        $books = $query->paginate(10)->withQueryString();
+
+        return view('books', compact('books', 'categories', 'types', 'tags'));
     }
+
+    public function home(Request $request)
+    {
+        $categories = Category::all();
+        $types = Type::all();
+        $tags = Tag::all();
+
+        $query = Book::query()->with('tags');
+
+        // Filter by category
+        if ($request->input('category')) {
+            $query->where('category_id', $request->input('category'));
+        }
+
+        // Filter by types
+        if ($request->has('types') && is_array($request->input('types'))) {
+            $query->whereIn('type_id', $request->input('types'));
+        }
+
+
+        return view('index', compact( 'categories', 'types'));
+    }
+    
 
 
     private function uploadCover(Request $request, $oldCover = null)

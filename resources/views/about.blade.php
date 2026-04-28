@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="mt-10 flex">
-                            <a href="contact.html" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500">Contacter nous</a>
+                            <a href="contact.html" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500">{{ __('messages.contact_us') }}</a>
                         </div>
                     </div>
                 </div>
