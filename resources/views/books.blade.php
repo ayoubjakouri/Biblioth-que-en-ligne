@@ -84,7 +84,7 @@
                                     <img src="{{ asset('covers/' . $book->cover) }}" alt="Book Cover"
                                         class="w-20 h-auto object-cover rounded-md mr-4">
                                     <div>
-                                        <a href="{{ route("book.index") }}"
+                                        <a href="{{ route("book.show", $book) }}"
                                             class="text-lg font-semibold text-gray-900 hover:text-blue-600">{{ $book->designation }}</a>
                                         <ul class="flex flex-wrap gap-x-4 text-sm text-gray-700 mt-1">
                                             <li>{{ $book->type->name }}</li>

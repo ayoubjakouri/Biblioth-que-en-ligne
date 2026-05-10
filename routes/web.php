@@ -18,7 +18,7 @@ Route::get('lang/{locale}', function (string $locale) {
     return redirect()->back();
 })->name('lang');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/about', function () {
         return view('about');

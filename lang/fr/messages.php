@@ -72,6 +72,7 @@ return [
     'author_books' => 'Livres de :name',
 
     // Auth
+    'full_name' => 'Nom Complete',
     'name' => 'Nom',
     'email' => 'E-mail',
     'password' => 'Mot de passe',
@@ -82,14 +83,25 @@ return [
     'register_title' => 'Créer un nouveau compte',
     'no_account' => 'Vous n\'avez pas de compte ?',
     'have_account' => 'Vous avez déjà un compte ?',
+    'policy' => 'En vous inscrivant, vous acceptez nos conditions générales',
 
     // Profil
-    'my_profile' => 'Mon profil',
+    'profile_information' => 'Information de profil',
+    'subtitle_profile_information' => 'Mettez à jour les informations de votre profil et votre adresse e-mail.',
+    'update_password' => 'Mettre à jour le mot de passe',
+    'subtitle_password' => 'Ensure your account is using a long, random password to stay secure.',
+    'current_password' => 'Mot de passe actuel',
+    'new_password' => 'Nouveau mot de passe',
     'my_favorites' => 'Mes favoris',
     'my_downloads' => 'Mes téléchargements',
     'edit_profile' => 'Modifier le profil',
     'update_profile' => 'Mettre à jour le profil',
     'profile_updated' => 'Profil mis à jour avec succès !',
+    'delete_account' => 'Supprimer le compte',
+    'title_delete_password' => 'Êtes-vous sûr de vouloir supprimer votre compte ?',
+    'subtitle_delete_account' => 'Une fois votre compte supprimé, toutes ses ressources et données seront définitivement effacées. Avant de supprimer votre compte, veuillez télécharger les données ou informations que vous souhaitez conserver.',
+
+
 
     // Général
     'send' => 'Envoyer',
@@ -122,5 +134,14 @@ return [
     'newsletter' => 'Bulletin d\'information',
     'email_placeholder' => 'Adresse e-mail',
     'go' => 'Aller',
+
+    // Contact 
+    'title' => 'Prenez Contact Avec Nous',
+    'message_placeholder' => 'Votre Message',
+    'name_placeholder' => 'Votre Nom',
+    'adresse_placeholder' => 'Adresse Email',
+    'sujet_placeholder' => 'Sujet',
+    'postal_code' => 'Code Postal',
+    'email_message' => 'Envoyez-nous votre requête à tout moment !'
 
 ];

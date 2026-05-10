@@ -56,7 +56,7 @@
                         <h4 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-4">Aperçu du livre</h4>
                         <ul class="mt-4 space-y-3 text-gray-600">
                             <li class="flex justify-between"><span>{{ __('messages.date_of_creation') }}:</span> <span
-                                    class="font-medium text-gray-900">{{ old('created_at', $book->created_at) }}</span></li>
+                                    class="font-medium text-gray-900">{{ old('created_at', $book->created_at->format('M d, Y')) }}</span></li>
                             <li class="flex justify-between"><span>{{ __('messages.book_author') }}:</span> <span
                                     class="font-medium text-gray-900">{{ old('auteur', $book->auteur) }}</span></li>
                             <li class="flex justify-between"><span>{{ __('messages.book_editor') }}:</span> <span

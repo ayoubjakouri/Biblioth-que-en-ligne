@@ -31,8 +31,7 @@
              
             <!-- Mobile Auth Section -->
             <div class="border-t border-gray-200 px-2 py-2">
-                @auth
-                    <div class="px-2 pt-2 pb-3 space-y-1">
+                 <div class="px-2 pt-2 pb-3 space-y-1">
                         <a href="{{ route("index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.home') }}</a>
                         <a href="{{ route("book.index") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.books') }}</a>
                         <a href="{{ route("books") }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition" @click="mobileOpen = false">{{ __('messages.search') }}</a>
@@ -44,6 +43,9 @@
                             <a href="{{ route('lang', 'fr') }}" class="text-sm font-medium {{ App::getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-600' }}">FR</a>
                         </div>
 
+                    </div>
+                @auth
+                    <div class="px-2 pt-2 pb-3 space-y-1">
                         <a href="{{ route('profile.edit') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium transition mt-2" @click="mobileOpen = false">{{ __('messages.profile') }}</a>
                         <form method="POST" action="{{ route('logout') }}" class="mt-2">
                             @csrf
@@ -56,10 +58,6 @@
 
                 @guest
                     <div class="px-2 pt-2 pb-3 space-y-1">
-                        <div class="flex space-x-4 px-3 py-2 mb-2 border-b border-gray-100">
-                            <a href="{{ route('lang', 'en') }}" class="text-sm font-medium {{ App::getLocale() == 'en' ? 'text-blue-600' : 'text-gray-600' }}">EN</a>
-                            <a href="{{ route('lang', 'fr') }}" class="text-sm font-medium {{ App::getLocale() == 'fr' ? 'text-blue-600' : 'text-gray-600' }}">FR</a>
-                        </div>
                         <div class="flex flex-col space-y-2">
                             <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium text-center transition" @click="mobileOpen = false">
                                 {{ __('messages.register') }}

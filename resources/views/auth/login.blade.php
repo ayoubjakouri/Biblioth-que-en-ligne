@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-slot:title> {{ __('Log in') }} </x-slot:title>
+    <x-slot:title> {{ __('messages.login') }} </x-slot:title>
     
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -9,7 +9,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email Address')" class="text-gray-700 font-medium" />
+            <x-input-label for="email" :value="__('messages.email')" class="text-gray-700 font-medium" />
             <x-text-input id="email" 
                 class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                 type="email" 
@@ -24,7 +24,7 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" class="text-gray-700 font-medium" />
+            <x-input-label for="password" :value="__('messages.password')" class="text-gray-700 font-medium" />
             <x-text-input id="password" 
                 class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 type="password"
@@ -39,7 +39,7 @@
         <div class="flex items-center">
             <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" name="remember">
             <label for="remember_me" class="ms-2 text-sm text-gray-600">
-                {{ __('Remember me') }}
+                {{ __('messages.remember_me') }}
             </label>
         </div>
 
@@ -47,19 +47,19 @@
             @if (Route::has('password.request'))
                 <a class="text-sm text-blue-600 hover:text-blue-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" 
                     href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                    {{ __('messages.forgot_password') }}
                 </a>
             @endif
 
             <x-primary-button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition">
-                {{ __('Log in') }}
+                {{ __('messages.login') }}
             </x-primary-button>
         </div>
 
         <div class="text-center pt-2">
             <p class="text-gray-600 text-sm">
-                {{ __("Don't have an account?") }}
-                <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-800 font-medium">{{ __('Register here') }}</a>
+                {{ __("messages.no_account") }}
+                <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-800 font-medium">{{ __('messages.register') }}</a>
             </p>
         </div>
     </form>

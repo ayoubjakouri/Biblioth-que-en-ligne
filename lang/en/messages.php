@@ -72,6 +72,7 @@ return [
     'author_books' => 'Books by :name',
 
     // Auth
+    'full_name' => 'Full Name',
     'name' => 'Name',
     'email' => 'Email',
     'password' => 'Password',
@@ -82,14 +83,20 @@ return [
     'register_title' => 'Create New Account',
     'no_account' => "Don't have an account?",
     'have_account' => 'Already have an account?',
+    'policy' => 'By registering, you agree to our terms and conditions',
 
     // Profile
-    'my_profile' => 'My Profile',
-    'my_favorites' => 'My Favorites',
-    'my_downloads' => 'My Downloads',
-    'edit_profile' => 'Edit Profile',
+    'profile_information' => 'Profile Information',
+    'subtitle_profile_information' => 'Update your account\'s profile information and email address.',
+    'update_password' => 'Update Password',
+    'subtitle_password' => 'Ensure your account is using a long, random password to stay secure.',
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
     'update_profile' => 'Update Profile',
     'profile_updated' => 'Profile updated successfully!',
+    'delete_account' => 'Delete Account',
+    'title_delete_password' => 'Are you sure you want to delete your account?',
+    'subtitle_delete_account' => 'Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.',
 
     // General
     'send' => 'Send',
@@ -123,5 +130,15 @@ return [
     'newsletter' => 'Newsletter',
     'email_placeholder' => 'Email Address',
     'go' => 'Go',
+
+    // Contact
+    'title' => 'Get in touch with us',
+    'message_placeholder' => 'Your Message',
+    'name_placeholder' => 'Your Name',
+    'address_placeholder' => 'E-mail address',
+    'subject_placeholder' => 'Subject',
+    'postal_code' => 'Postal Code',
+    'email_message' => 'Send us your request at any time !'
+
 
 ];
