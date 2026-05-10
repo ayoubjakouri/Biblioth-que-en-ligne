@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookApiController;
+use App\Http\Controllers\SendBookMailController;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', [BookController::class, 'home'])->name('index');
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/contact', function () {
         return view('contact');
     })->name('contact');
+
+    Route::post('/send-book/{book}', [SendBookMailController::class, 'sendBook'])->name('email.send');
 
     Route::resource('book', BookController::class);
     Route::apiResource('api/book', BookApiController::class);

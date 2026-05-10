@@ -3,6 +3,13 @@
 @section("content")
     <!-- Main Content -->
     <main class="py-12 bg-gray-50">
+         @if(session('success'))
+                <div class="max-w-3xl mx-auto mb-6">
+                    <div class="p-4 rounded-md bg-green-50 border border-green-200 text-green-800">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @endif
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -73,11 +80,14 @@
                                 {{ __('messages.buy') }}
                             </a>
                         </div>
-                         <div class="mt-6">
-                            <a href="#"
-                                class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-200">
-                                {{ __('messages.send') }}
-                            </a>
+                        <div class="mt-6">
+                            <form action="{{ route('email.send', $book) }}" method="post">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-200">
+                                    {{ __('messages.send') }}
+                            </button>
+                            </form>
                         </div>
                     </div>
                 </aside>
