@@ -34,10 +34,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/send-book/{book}', [SendBookMailController::class, 'sendBook'])->name('email.send');
 
     Route::resource('book', BookController::class);
-    Route::apiResource('api/book', BookApiController::class);
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::apiResource('api/book', BookApiController::class)->middleware('auth:sanctum');
+
 
 require __DIR__ . '/auth.php';
